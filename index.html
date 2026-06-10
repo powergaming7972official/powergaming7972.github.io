@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Power Gaming 7972</title>
+
+<meta property="og:title" content="Power Gaming 7972">
+<meta property="og:description" content="BUSSID Mods & Liveries - Free & Premium">
+<meta property="og:image" content="https://sharadmangaloreofficial-cyber.github.io/power-gaming-7972/logo.jpg">
+<meta property="og:url" content="https://sharadmangaloreofficial-cyber.github.io/power-gaming-7972/">
+<meta property="og:type" content="website">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#000;
+    color:#fff;
+}
+
+header{
+    text-align:center;
+    padding:30px 20px;
+}
+
+#clock{
+    color:red;
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+#searchInput{
+    width:80%;
+    max-width:400px;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.logo img{
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    border:3px solid red;
+    object-fit:cover;
+}
+
+h1{
+    color:red;
+}
+
+.subtitle{
+    opacity:.8;
+}
+
+.buttons a{
+    display:inline-block;
+    margin:8px;
+    padding:10px 18px;
+    background:red;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+}
+
+.section{
+    padding:25px 15px;
+}
+
+.section h2{
+    color:red;
+    text-align:center;
+}
+
+.card{
+    background:#111;
+    max-width:400px;
+    margin:20px auto;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid #222;
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.card-body h3{
+    color:red;
+}
+
+.btn{
+    display:inline-block;
+    padding:8px 14px;
+    margin-top:8px;
+    background:red;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    margin-right:5px;
+}
+
+.contact{
+    text-align:center;
+    padding:30px;
+    border-top:1px solid #222;
+}
+
+.contact a{
+    color:white;
+    margin:8px;
+    display:inline-block;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div id="clock"></div>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search liveries..."
+onkeyup="searchLiveries()">
+
+<div class="logo">
+<img src="logo.jpg" alt="Logo">
+</div>
+
+<h1>POWER GAMING 7972</h1>
+<p class="subtitle">BUSSID Mods & Liveries</p>
+
+<div class="buttons">
+<a href="https://youtube.com/@powergaming7972" target="_blank">YouTube</a>
+<a href="https://wa.me/919741252176" target="_blank">WhatsApp</a>
+</div>
+
+</header>
+
+<div class="section">
+<h2>FREE LIVERIES</h2>
+
+<div class="card">
+<img src="livery1.jpg" alt="">
+<div class="card-body">
+<h3>YK TRAVELS</h3>
+<a class="btn" href="#">YouTube</a>
+<a class="btn" href="#">Download</a>
+</div>
+</div>
+
+<div class="card">
+<img src="livery1.jpg" alt="">
+<div class="card-body">
+<h3>POWER SIGMA</h3>
+<a class="btn" href="#">YouTube</a>
+<a class="btn" href="#">Download</a>
+</div>
+</div>
+
+<div class="card">
+<img src="livery1.jpg" alt="">
+<div class="card-body">
+<h3>GOLDEN LEMON</h3>
+<a class="btn" href="#">YouTube</a>
+<a class="btn" href="#">Download</a>
+</div>
+</div>
+
+<div class="card">
+<img src="livery2.jpg" alt="">
+<div class="card-body">
+<h3>GOLDEN DILKUSH</h3>
+<a class="btn" href="#">YouTube</a>
+<a class="btn" href="#">Download</a>
+</div>
+</div>
+
+</div>
+
+<div class="section">
+<h2>PREMIUM LIVERIES</h2>
+
+<div class="card">
+<img src="premium1.jpg" alt="">
+<div class="card-body">
+<h3>PAID LIVERY</h3>
+<a class="btn" href="https://wa.me/919741252176">Contact</a>
+</div>
+</div>
+
+</div>
+
+<div class="contact">
+<h2 style="color:red;">Contact</h2>
+
+<a href="https://www.instagram.com/ultimateapex7/" target="_blank">Instagram</a>
+<a href="mailto:sharadmangaloreofficial@gmail.com">Email</a>
+<a href="https://youtube.com/@powergaming7972" target="_blank">YouTube</a>
+</div>
+
+<script>
+function updateClock(){
+    const now = new Date();
+    document.getElementById("clock").innerHTML =
+    now.toLocaleString("en-IN",{
+        timeZone:"Asia/Kolkata"
+    });
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+function searchLiveries(){
+    let input =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+    let cards =
+    document.querySelectorAll(".card");
+
+    cards.forEach(card=>{
+        let text =
+        card.innerText.toLowerCase();
+
+        if(text.includes(input)){
+            card.style.display="block";
+        }else{
+            card.style.display="none";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
