@@ -13,6 +13,48 @@
 <meta property="og:type" content="website">
 
 <style>
+
+#floatingWhatsapp{
+position:fixed;
+bottom:20px;
+left:20px;
+background:#25D366;
+color:white;
+width:60px;
+height:60px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+font-size:30px;
+text-decoration:none;
+animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-10px);
+}
+}
+
+    .card{
+animation: fadeIn 1.7s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
 body{
     margin:0;
     font-family:Arial,sans-serif;
@@ -42,6 +84,19 @@ header{
 }
 
 .logo img{
+animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{
+box-shadow:0 0 10px red;
+}
+to{
+box-shadow:0 0 30px red;
+}
+}
+
+.logo img{
     width:160px;
     height:160px;
     border-radius:50%;
@@ -50,7 +105,14 @@ header{
 }
 
 h1{
-    color:red;
+color:red;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
 }
 
 .subtitle{
@@ -72,8 +134,18 @@ h1{
 }
 
 .section h2{
-    color:red;
-    text-align:center;
+color:red;
+text-align:center;
+animation: glowTitle 2s infinite alternate;
+}
+
+@keyframes glowTitle{
+from{
+text-shadow:0 0 5px red;
+}
+to{
+text-shadow:0 0 20px red;
+}
 }
 
 .card{
@@ -100,14 +172,19 @@ h1{
 }
 
 .btn{
-    display:inline-block;
-    padding:8px 14px;
-    margin-top:8px;
-    background:red;
-    color:white;
-    text-decoration:none;
-    border-radius:6px;
-    margin-right:5px;
+display:inline-block;
+padding:8px 14px;
+margin-top:8px;
+background:red;
+color:white;
+text-decoration:none;
+border-radius:6px;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.08);
+box-shadow:0 0 15px red;
 }
 
 .contact{
@@ -160,41 +237,12 @@ gap:15px;
 text-align:center;
 ">
 
-<div class="card" style="width:180px;">
-<div class="card-body">
-<h2>100+</h2>
-<p>Liveries Created</p>
-</div>
-</div>
-
-<div class="card" style="width:180px;">
-<div class="card-body">
-<h2>50+</h2>
-<p>Happy Users</p>
-</div>
-</div>
-
-<div class="card" style="width:180px;">
-<div class="card-body">
-<h2>24h</h2>
-<p>Fast Response</p>
-</div>
-</div>
 
 </div>
 
 </div>
 
 <div class="section">
-<h2>FEATURED WORKS</h2>
-
-<div class="card">
-<img src="featured1.jpg">
-<div class="card-body">
-<h3>Best Livery Project</h3>
-<p>One of our top creations.</p>
-</div>
-</div>
 
 </div>
 
@@ -557,6 +605,12 @@ BUSSID Mods • Liveries • Services
 © 2026 POWER GAMING 7972
 
 </footer>
+
+<a href="https://wa.me/919741252176"
+target="_blank"
+id="floatingWhatsapp">
+💬
+</a>
 
 </body>
 </html>
