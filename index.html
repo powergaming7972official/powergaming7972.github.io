@@ -58,8 +58,30 @@ transform:translateY(0);
 body{
     margin:0;
     font-family:Arial,sans-serif;
-    background:#000;
     color:#fff;
+
+    background:linear-gradient(
+    -45deg,
+    #000,
+    #111,
+    #220000,
+    #000
+    );
+
+    background-size:400% 400%;
+    animation:bgMove 10s ease infinite;
+}
+
+@keyframes bgMove{
+0%{
+background-position:0% 50%;
+}
+50%{
+background-position:100% 50%;
+}
+100%{
+background-position:0% 50%;
+}
 }
 
 header{
@@ -131,6 +153,18 @@ animation:pulse 2s infinite;
 
 .section{
     padding:25px 15px;
+    animation:slideUp 1s ease;
+}
+
+@keyframes slideUp{
+from{
+opacity:0;
+transform:translateY(50px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 .section h2{
@@ -154,7 +188,19 @@ text-shadow:0 0 20px red;
     margin:20px auto;
     border-radius:12px;
     overflow:hidden;
-    border:1px solid #222;
+
+    border:2px solid red;
+
+    animation:borderGlow 2s infinite alternate;
+}
+
+@keyframes borderGlow{
+from{
+box-shadow:0 0 5px red;
+}
+to{
+box-shadow:0 0 25px red;
+}
 }
 
 .card img{
@@ -180,6 +226,24 @@ color:white;
 text-decoration:none;
 border-radius:6px;
 transition:0.3s;
+
+position:relative;
+overflow:hidden;
+}
+
+.btn::before{
+content:'';
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:rgba(255,255,255,0.3);
+transition:0.5s;
+}
+
+.btn:hover::before{
+left:100%;
 }
 
 .btn:hover{
@@ -348,61 +412,6 @@ text-align:center;
 <h3>Mod & Livery Review</h3>
 <p>Get feedback and suggestions.</p>
 <p><b>FREE</b></p>
-</div>
-</div>
-
-</div>
-
-<div class="section">
-<h2>FREE MODS</h2>
-
-<div class="card">
-<img src="bus1.jpg" alt="">
-<div class="card-body">
-<h3>Bus Mod 1</h3>
-<p>⭐⭐⭐⭐⭐</p>
-<a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
-</div>
-</div>
-
-<div class="card">
-<img src="truck1.jpg" alt="">
-<div class="card-body">
-<h3>Truck Mod 1</h3>
-<p>⭐⭐⭐⭐⭐</p>
-<a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
-</div>
-</div>
-
-<div class="card">
-<img src="car1.jpg" alt="">
-<div class="card-body">
-<h3>Car Mod 1</h3>
-<p>⭐⭐⭐⭐⭐</p>
-<a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
-</div>
-</div>
-
-<div class="card">
-<img src="bike1.jpg" alt="">
-<div class="card-body">
-<h3>Bike Mod 1</h3>
-<p>⭐⭐⭐⭐⭐</p>
-<a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
-</div>
-</div>
-
-<div class="card">
-<img src="map1.jpg" alt="">
-<div class="card-body">
-<h3>Map Mod 1</h3>
-<p>⭐⭐⭐⭐⭐</p>
-<a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
 </div>
 </div>
 
