@@ -12,7 +12,423 @@
 <meta property="og:url" content="https://sharadmangaloreofficial-cyber.github.io/power-gaming-7972/">
 <meta property="og:type" content="website">
 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <style>
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+color:#fff;
+overflow-x:hidden;
+background:linear-gradient(-45deg,#000,#111,#220000,#000);
+background-size:400% 400%;
+animation:bgMove 10s ease infinite;
+}
+
+#loader{
+position:fixed;
+inset:0;
+background:#000;
+z-index:99999;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+transition:opacity .8s ease, visibility .8s ease;
+}
+
+#loader.hide{
+opacity:0;
+visibility:hidden;
+}
+
+.loader-logo{
+width:130px;
+height:130px;
+border-radius:50%;
+border:3px solid red;
+object-fit:cover;
+box-shadow:0 0 35px red;
+animation:loaderPulse 1.5s infinite alternate;
+}
+
+.loader-text{
+color:red;
+margin-top:18px;
+font-weight:bold;
+letter-spacing:2px;
+text-shadow:0 0 15px red;
+}
+
+@keyframes loaderPulse{
+from{transform:scale(1);}
+to{transform:scale(1.08);}
+}
+
+#mouseGlow,
+#spotlight{
+position:fixed;
+pointer-events:none;
+z-index:9998;
+}
+
+#mouseGlow{
+width:120px;
+height:120px;
+border-radius:50%;
+background:radial-gradient(circle, rgba(255,0,0,.35), transparent 70%);
+transform:translate(-50%,-50%);
+filter:blur(8px);
+}
+
+#spotlight{
+inset:0;
+background:radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,0,0,.16), transparent 260px);
+mix-blend-mode:screen;
+}
+
+#particlesCanvas,
+#matrixCanvas{
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+#particlesCanvas{
+z-index:-3;
+}
+
+#matrixCanvas{
+z-index:-2;
+opacity:.22;
+}
+
+.spark{
+position:fixed;
+bottom:-10px;
+width:3px;
+height:3px;
+background:red;
+border-radius:50%;
+box-shadow:0 0 10px red;
+pointer-events:none;
+animation:sparkRise 4s linear forwards;
+z-index:1;
+}
+
+@keyframes sparkRise{
+from{opacity:0;transform:translateY(0) scale(.7);}
+20%{opacity:1;}
+to{opacity:0;transform:translateY(-160px) scale(1.3);}
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.navbar{
+position:sticky;
+top:0;
+z-index:9999;
+background:rgba(0,0,0,.88);
+backdrop-filter:blur(8px);
+border-bottom:1px solid rgba(255,0,0,.45);
+box-shadow:0 0 20px rgba(255,0,0,.25);
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:6px;
+padding:10px;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+padding:8px 12px;
+border-radius:6px;
+font-size:14px;
+transition:.3s;
+}
+
+.navbar a:hover{
+background:red;
+box-shadow:0 0 15px red;
+}
+
+header{
+text-align:center;
+padding:30px 20px;
+position:relative;
+}
+
+#clock{
+color:red;
+font-size:18px;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+#searchInput,
+.input-box{
+width:80%;
+max-width:400px;
+padding:10px;
+border:none;
+border-radius:8px;
+margin-bottom:12px;
+}
+
+.logo img{
+width:160px;
+height:160px;
+border-radius:50%;
+border:3px solid red;
+object-fit:cover;
+animation:glow 2s infinite alternate, floatLogo 4s ease-in-out infinite;
+}
+
+@keyframes glow{
+from{box-shadow:0 0 10px red;}
+to{box-shadow:0 0 30px red;}
+}
+
+@keyframes floatLogo{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+}
+
+h1{
+color:red;
+animation:pulse 2s infinite;
+text-shadow:0 0 12px red;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
+}
+
+.subtitle{
+opacity:.8;
+min-height:22px;
+}
+
+.buttons a,
+.btn{
+display:inline-block;
+margin:8px;
+padding:10px 18px;
+background:red;
+color:white;
+text-decoration:none;
+border-radius:6px;
+position:relative;
+overflow:hidden;
+transition:.3s;
+border:none;
+cursor:pointer;
+font-family:Arial,sans-serif;
+font-size:14px;
+}
+
+.buttons a:hover,
+.btn:hover{
+transform:scale(1.08);
+box-shadow:0 0 15px red;
+}
+
+.ripple{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,.55);
+transform:scale(0);
+animation:rippleMove .6s linear;
+pointer-events:none;
+}
+
+@keyframes rippleMove{
+to{transform:scale(4);opacity:0;}
+}
+
+.section{
+padding:25px 15px;
+position:relative;
+z-index:2;
+transform-style:preserve-3d;
+}
+
+.reveal{
+opacity:0;
+transform:translateY(45px);
+transition:opacity .8s ease, transform .8s ease;
+}
+
+.reveal.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.section h2{
+color:red;
+text-align:center;
+animation:glowTitle 2s infinite alternate;
+text-shadow:0 0 10px red;
+}
+
+@keyframes glowTitle{
+from{text-shadow:0 0 5px red;}
+to{text-shadow:0 0 22px red;}
+}
+
+.card{
+background:#111;
+max-width:400px;
+margin:20px auto;
+border-radius:12px;
+overflow:hidden;
+border:2px solid red;
+position:relative;
+animation:borderGlow 2s infinite alternate;
+transition:transform .35s ease, box-shadow .35s ease;
+transform-style:preserve-3d;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 12px 35px rgba(255,0,0,.45);
+}
+
+.card::before{
+content:"";
+position:absolute;
+inset:0;
+padding:2px;
+border-radius:12px;
+background:linear-gradient(90deg, transparent, red, transparent);
+background-size:300% 300%;
+animation:neonSweep 3s linear infinite;
+pointer-events:none;
+-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+}
+
+@keyframes neonSweep{
+0%{background-position:0% 50%;}
+100%{background-position:300% 50%;}
+}
+
+@keyframes borderGlow{
+from{box-shadow:0 0 5px red;}
+to{box-shadow:0 0 25px red;}
+}
+
+.premium-card{
+animation:borderGlow 2s infinite alternate, fireGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes fireGlow{
+0%,100%{box-shadow:0 0 15px red, 0 0 25px rgba(255,80,0,.25);}
+50%{box-shadow:0 0 25px red, 0 0 45px rgba(255,120,0,.45);}
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+transition:transform .45s ease;
+}
+
+.card:hover img{
+transform:scale(1.08);
+}
+
+.card-body{
+padding:15px;
+}
+
+.card-body h3{
+color:red;
+}
+
+.new-badge{
+position:absolute;
+top:10px;
+right:10px;
+background:red;
+color:white;
+font-size:12px;
+font-weight:bold;
+padding:5px 9px;
+border-radius:20px;
+box-shadow:0 0 15px red;
+animation:newPulse 1.3s infinite;
+z-index:5;
+}
+
+.safe-badge{
+display:inline-block;
+margin:8px;
+padding:6px 10px;
+border-radius:20px;
+background:#111;
+border:1px solid red;
+color:white;
+box-shadow:0 0 10px red;
+font-size:13px;
+}
+
+@keyframes newPulse{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.15);}
+}
+
+.floating-icon{
+position:fixed;
+color:rgba(255,0,0,.35);
+font-size:28px;
+z-index:1;
+pointer-events:none;
+animation:floatIcon 7s ease-in-out infinite;
+text-shadow:0 0 14px red;
+}
+
+.icon-1{top:18%;left:7%;animation-delay:0s;}
+.icon-2{top:42%;right:8%;animation-delay:1s;}
+.icon-3{bottom:28%;left:9%;animation-delay:2s;}
+.icon-4{bottom:14%;right:10%;animation-delay:3s;}
+
+@keyframes floatIcon{
+0%,100%{transform:translateY(0) rotate(0);}
+50%{transform:translateY(-18px) rotate(8deg);}
+}
+
+.contact{
+text-align:center;
+padding:30px;
+border-top:1px solid #222;
+position:relative;
+z-index:2;
+}
+
+.contact a{
+color:white;
+margin:8px;
+display:inline-block;
+}
 
 #floatingWhatsapp{
 position:fixed;
@@ -29,353 +445,195 @@ border-radius:50%;
 font-size:30px;
 text-decoration:none;
 animation:bounce 2s infinite;
+z-index:9999;
 }
 
 @keyframes bounce{
-0%,100%{
-transform:translateY(0);
-}
-50%{
-transform:translateY(-10px);
-}
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
 }
 
-    .card{
-animation: fadeIn 1.7s ease;
-}
-
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    color:#fff;
-
-    background:linear-gradient(
-    -45deg,
-    #000,
-    #111,
-    #220000,
-    #000
-    );
-
-    background-size:400% 400%;
-    animation:bgMove 10s ease infinite;
-}
-
-@keyframes bgMove{
-0%{
-background-position:0% 50%;
-}
-50%{
-background-position:100% 50%;
-}
-100%{
-background-position:0% 50%;
-}
-}
-
-header{
-    text-align:center;
-    padding:30px 20px;
-}
-
-#clock{
-    color:red;
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-
-#searchInput{
-    width:80%;
-    max-width:400px;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    margin-bottom:20px;
-}
-
-.logo img{
-animation: glow 2s infinite alternate;
-}
-
-@keyframes glow{
-from{
-box-shadow:0 0 10px red;
-}
-to{
-box-shadow:0 0 30px red;
-}
-}
-
-.logo img{
-    width:160px;
-    height:160px;
-    border-radius:50%;
-    border:3px solid red;
-    object-fit:cover;
-}
-
-h1{
-color:red;
-animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.05);}
-100%{transform:scale(1);}
-}
-
-.subtitle{
-    opacity:.8;
-}
-
-.buttons a{
-    display:inline-block;
-    margin:8px;
-    padding:10px 18px;
-    background:red;
-    color:white;
-    text-decoration:none;
-    border-radius:6px;
-}
-
-.section{
-    padding:25px 15px;
-    animation:slideUp 1s ease;
-}
-
-@keyframes slideUp{
-from{
-opacity:0;
-transform:translateY(50px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-.section h2{
-color:red;
-text-align:center;
-animation: glowTitle 2s infinite alternate;
-}
-
-@keyframes glowTitle{
-from{
-text-shadow:0 0 5px red;
-}
-to{
-text-shadow:0 0 20px red;
-}
-}
-
-.card{
-    background:#111;
-    max-width:400px;
-    margin:20px auto;
-    border-radius:12px;
-    overflow:hidden;
-
-    border:2px solid red;
-
-    animation:borderGlow 2s infinite alternate;
-}
-
-@keyframes borderGlow{
-from{
-box-shadow:0 0 5px red;
-}
-to{
-box-shadow:0 0 25px red;
-}
-}
-
-.card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-}
-
-.card-body{
-    padding:15px;
-}
-
-.card-body h3{
-    color:red;
-}
-
-.btn{
-display:inline-block;
-padding:8px 14px;
-margin-top:8px;
+#backToTop{
+position:fixed;
+right:20px;
+bottom:20px;
+width:48px;
+height:48px;
+border:none;
+border-radius:50%;
 background:red;
 color:white;
-text-decoration:none;
-border-radius:6px;
-transition:0.3s;
+font-size:22px;
+cursor:pointer;
+box-shadow:0 0 18px red;
+opacity:0;
+visibility:hidden;
+transition:.3s;
+z-index:9999;
+}
 
+#backToTop.show{
+opacity:1;
+visibility:visible;
+}
+
+footer{
 position:relative;
-overflow:hidden;
+z-index:2;
 }
 
-.btn::before{
-content:'';
-position:absolute;
-top:0;
-left:-100%;
-width:100%;
-height:100%;
-background:rgba(255,255,255,0.3);
-transition:0.5s;
+@media(max-width:600px){
+.logo img{width:130px;height:130px;}
+h1{font-size:26px;}
+.card{max-width:92%;}
+.floating-icon{font-size:20px;}
+.navbar a{font-size:13px;padding:7px 9px;}
 }
 
-.btn:hover::before{
-left:100%;
-}
-
-.btn:hover{
-transform:scale(1.08);
-box-shadow:0 0 15px red;
-}
-
-.contact{
-    text-align:center;
-    padding:30px;
-    border-top:1px solid #222;
-}
-
-.contact a{
-    color:white;
-    margin:8px;
-    display:inline-block;
+@media(prefers-reduced-motion:reduce){
+*{animation:none!important;transition:none!important;}
 }
 </style>
 </head>
 
 <body>
 
-<header>
+<div id="loader">
+<img class="loader-logo" src="logo.jpg" alt="Logo">
+<div class="loader-text">POWER GAMING 7972</div>
+</div>
 
+<canvas id="particlesCanvas"></canvas>
+<canvas id="matrixCanvas"></canvas>
+<div id="mouseGlow"></div>
+<div id="spotlight"></div>
+
+<div class="floating-icon icon-1">🎮</div>
+<div class="floating-icon icon-2">⚡</div>
+<div class="floating-icon icon-3">🔥</div>
+<div class="floating-icon icon-4">🏁</div>
+
+<nav class="navbar">
+<a href="#home">Home</a>
+<a href="#liveries">Liveries</a>
+<a href="#services">Services</a>
+<a href="#login">Login</a>
+<a href="#dashboard">Dashboard</a>
+<a href="#membership">Membership</a>
+<a href="#reviews">Reviews</a>
+<a href="#community">Community</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<header id="home" class="reveal">
 <div id="clock"></div>
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search liveries..."
-onkeyup="searchLiveries()">
+<input type="text" id="searchInput" placeholder="Search liveries..." onkeyup="searchLiveries()">
 
 <div class="logo">
 <img src="logo.jpg" alt="Logo">
 </div>
 
-<h1>POWER GAMING 7972</h1>
-<p class="subtitle">BUSSID Mods & Liveries</p>
+<h1 class="scramble-text">POWER GAMING 7972</h1>
+<p class="subtitle" id="typewriter"></p>
 
 <div class="buttons">
 <a href="https://youtube.com/@powergaming7972" target="_blank">YouTube</a>
 <a href="https://wa.me/919741252176" target="_blank">WhatsApp</a>
 </div>
-
 </header>
 
-<div class="section">
+<div class="section reveal" id="liveries">
+<h2 class="scramble-text">FREE LIVERIES</h2>
 
-<div style="
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:15px;
-text-align:center;
-">
-
-
-</div>
-
-</div>
-
-<div class="section">
-
-</div>
-
-<div class="section">
-<h2>FREE LIVERIES</h2>
-
-<div class="card">
+<div class="card reveal">
+<span class="new-badge">NEW</span>
 <img src="livery1.jpg" alt="">
 <div class="card-body">
 <h3>YK TRAVELS</h3>
+<span class="safe-badge">Safe Download Verified</span>
 <a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
+<a class="btn" data-download="livery1" onclick="startDownload('livery1','#')">Download</a>
+<a class="btn" onclick="favoriteLivery('livery1')">Favorite</a>
+<a class="btn" onclick="reportBrokenLink('livery1')">Report Link</a>
+<p id="count-livery1">Downloads: 0</p>
 </div>
 </div>
 
-<div class="card">
+<div class="card reveal">
+<span class="new-badge">NEW</span>
 <img src="livery2.jpg" alt="">
 <div class="card-body">
 <h3>POWER SIGMA</h3>
+<span class="safe-badge">Safe Download Verified</span>
 <a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
+<a class="btn" data-download="livery2" onclick="startDownload('livery2','#')">Download</a>
+<a class="btn" onclick="favoriteLivery('livery2')">Favorite</a>
+<a class="btn" onclick="reportBrokenLink('livery2')">Report Link</a>
+<p id="count-livery2">Downloads: 0</p>
 </div>
 </div>
 
-<div class="card">
+<div class="card reveal">
 <img src="livery3.jpg" alt="">
 <div class="card-body">
 <h3>GOLDEN LEMON</h3>
+<span class="safe-badge">Safe Download Verified</span>
 <a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
+<a class="btn" data-download="livery3" onclick="startDownload('livery3','#')">Download</a>
+<a class="btn" onclick="favoriteLivery('livery3')">Favorite</a>
+<a class="btn" onclick="reportBrokenLink('livery3')">Report Link</a>
+<p id="count-livery3">Downloads: 0</p>
 </div>
 </div>
 
-<div class="card">
+<div class="card reveal">
 <img src="livery4.jpg" alt="">
 <div class="card-body">
 <h3>GOLDEN DILKUSH</h3>
+<span class="safe-badge">Safe Download Verified</span>
 <a class="btn" href="#">YouTube</a>
-<a class="btn" href="#">Download</a>
+<a class="btn" data-download="livery4" onclick="startDownload('livery4','#')">Download</a>
+<a class="btn" onclick="favoriteLivery('livery4')">Favorite</a>
+<a class="btn" onclick="reportBrokenLink('livery4')">Report Link</a>
+<p id="count-livery4">Downloads: 0</p>
 </div>
 </div>
 
-<div class="card">
+<div class="card reveal">
+<span class="new-badge">NEW</span>
 <img src="livery5.jpeg" alt="">
 <div class="card-body">
 <h3>BRAMARAMBA HOLIDAYS</h3>
+<span class="safe-badge">Safe Download Verified</span>
 <a class="btn" href="https://youtu.be/k-dtF_HuE8k?si=u3I3BZznNASIaYp6">YouTube</a>
-<a class="btn" href="https://sub4unlock.com/S/F3crh">Download</a>
+<a class="btn" data-download="livery5" onclick="startDownload('livery5','https://sub4unlock.com/S/F3crh')">Download</a>
+<a class="btn" onclick="favoriteLivery('livery5')">Favorite</a>
+<a class="btn" onclick="reportBrokenLink('livery5')">Report Link</a>
+<p id="count-livery5">Downloads: 0</p>
+</div>
 </div>
 </div>
 
-</div>
+<div class="section reveal">
+<h2 class="scramble-text">PREMIUM LIVERIES</h2>
 
-<div class="section">
-<h2>PREMIUM LIVERIES</h2>
-
-<div class="card">
+<div class="card premium-card reveal">
+<span class="new-badge">PREMIUM</span>
 <img src="premium1.jpg" alt="">
 <div class="card-body">
 <h3>PAID LIVERY</h3>
-<a class="btn" href="https://wa.me/919741252176">Contact</a>
+<span class="safe-badge">Premium Protected</span>
+<a class="btn" onclick="buyPremiumLivery('premium1',49)">Buy ₹49</a>
+<a class="btn" onclick="premiumDownload('premium1','#')">Download</a>
+</div>
 </div>
 </div>
 
-</div>
-<div class="section">
-<h2>OUR WORKS & SERVICES</h2>
+<div class="section reveal" id="services">
+<h2 class="scramble-text">OUR WORKS & SERVICES</h2>
 
-<div class="card">
+<div class="card reveal">
 <div class="card-body">
 <h3>Livery Making</h3>
 <p>Custom BUSSID liveries made according to your requirements.</p>
@@ -383,7 +641,7 @@ text-align:center;
 </div>
 </div>
 
-<div class="card">
+<div class="card reveal">
 <div class="card-body">
 <h3>Name Board Works</h3>
 <p>Custom destination and route name boards.</p>
@@ -391,7 +649,7 @@ text-align:center;
 </div>
 </div>
 
-<div class="card">
+<div class="card reveal">
 <div class="card-body">
 <h3>Logo Making</h3>
 <p>Gaming logos and YouTube branding.</p>
@@ -399,7 +657,7 @@ text-align:center;
 </div>
 </div>
 
-<div class="card">
+<div class="card reveal">
 <div class="card-body">
 <h3>YouTube Complete Package</h3>
 <p>Starter package for new creators.</p>
@@ -407,219 +665,1071 @@ text-align:center;
 </div>
 </div>
 
-<div class="card">
+<div class="card reveal">
 <div class="card-body">
 <h3>Mod & Livery Review</h3>
 <p>Get feedback and suggestions.</p>
 <p><b>FREE</b></p>
 </div>
 </div>
-
 </div>
 
-<div class="section">
-<h2>HOW TO ORDER</h2>
+<div class="section reveal" id="login">
+<h2 class="scramble-text">USER LOGIN</h2>
 
-<div class="card">
+<div class="card reveal">
 <div class="card-body">
-<p>1️⃣ Contact on WhatsApp</p>
-<p>2️⃣ Send your requirements</p>
-<p>3️⃣ Make payment</p>
-<p>4️⃣ Receive your work</p>
+<input class="input-box" id="authEmail" type="email" placeholder="Email">
+<input class="input-box" id="authPassword" type="password" placeholder="Password">
+<br>
+<button class="btn" onclick="emailLogin()">Login</button>
+<button class="btn" onclick="emailSignup()">Sign Up</button>
+<button class="btn" onclick="googleLogin()">Google</button>
+<button class="btn" onclick="guestLogin()">Guest</button>
 </div>
 </div>
 </div>
 
-<div class="section">
-<h2>WHY CHOOSE US</h2>
+<div class="section reveal" id="dashboard">
+<h2 class="scramble-text">USER DASHBOARD</h2>
+<div id="userDashboard"></div>
+</div>
 
-<div class="card">
+<div class="section reveal" id="membership">
+<h2 class="scramble-text">MEMBERSHIP PLANS</h2>
+
+<div class="card reveal">
 <div class="card-body">
-<p>✅ Affordable Prices</p>
-<p>✅ Fast Delivery</p>
-<p>✅ Quality Designs</p>
-<p>✅ Friendly Support</p>
-</div>
+<h3>Free Member</h3>
+<p>Access free liveries</p>
+<p>Basic profile</p>
+<p><b>FREE</b></p>
 </div>
 </div>
 
-<div class="section">
-<h2>REVIEWS & RATINGS</h2>
-
-<div class="card">
+<div class="card premium-card reveal">
+<span class="new-badge">PREMIUM</span>
 <div class="card-body">
-
-<h3>Website Rating</h3>
-
-<p style="font-size:28px;">⭐⭐⭐⭐⭐</p>
-
-<p>4.9 / 5 Rating</p>
-
-<hr>
-
-<input
-type="text"
-id="reviewName"
-placeholder="Your Name"
-style="width:95%;padding:10px;border-radius:6px;">
-
-<br><br>
-
-<textarea
-id="reviewText"
-placeholder="Write your review"
-style="width:95%;height:100px;padding:10px;border-radius:6px;"></textarea>
-
-<br><br>
-
-<button
-class="btn"
-onclick="addReview()">
-Submit Review
-</button>
-
-<div id="reviews"></div>
-
+<h3>Premium Member</h3>
+<p>Premium liveries</p>
+<p>Faster downloads</p>
+<p>Premium badge</p>
+<p><b>₹99</b></p>
+<button class="btn" onclick="payNow('Premium Membership',99)">Buy Premium</button>
 </div>
 </div>
 
-</div>
-
-</div>
-
-<div class="section">
-<h2>CUSTOM REQUESTS</h2>
-
-<div class="card">
+<div class="card premium-card reveal">
+<span class="new-badge">LIFETIME</span>
 <div class="card-body">
-<p>Need a custom livery, logo, or name board?</p>
-
-<a class="btn"
-href="https://wa.me/919741252176"
-target="_blank">
-Request Now
-</a>
-
+<h3>Lifetime Member</h3>
+<p>Permanent premium access</p>
+<p>Lifetime badge</p>
+<p>Exclusive content</p>
+<p><b>₹499</b></p>
+<button class="btn" onclick="payNow('Lifetime Membership',499)">Buy Lifetime</button>
 </div>
 </div>
-
 </div>
 
-<div class="section">
-<h2>FAQ</h2>
+<div class="section reveal" id="reviews">
+<h2 class="scramble-text">REVIEWS & RATINGS</h2>
 
-<div class="card">
+<div class="card reveal">
 <div class="card-body">
-<p><b>How to order?</b></p>
-<p>Contact us on WhatsApp.</p>
+<h3>Write Review</h3>
 
-<p><b>How long does delivery take?</b></p>
-<p>Usually within 24–48 hours.</p>
+<select id="ratingValue" class="input-box">
+<option value="5">★★★★★</option>
+<option value="4">★★★★</option>
+<option value="3">★★★</option>
+<option value="2">★★</option>
+<option value="1">★</option>
+</select>
 
-<p><b>Do you provide free reviews?</b></p>
-<p>Yes.</p>
+<textarea id="reviewText" placeholder="Write your review" class="input-box" style="height:100px;"></textarea>
+
+<br>
+<button class="btn" onclick="submitReview()">Submit Review</button>
 </div>
 </div>
 
+<div id="reviewList"></div>
 </div>
 
-<div class="section">
-<h2>TERMS</h2>
+<div class="section reveal" id="community">
+<h2 class="scramble-text">COMMUNITY POSTS</h2>
 
-<div class="card">
+<div class="card reveal">
 <div class="card-body">
-<p>Payments are non-refundable after work starts.</p>
-<p>Delivery time may vary depending on workload.</p>
-<p>Custom orders require complete details from the customer.</p>
+<textarea id="postText" placeholder="Write community post" class="input-box" style="height:100px;"></textarea>
+<br>
+<button class="btn" onclick="submitPost()">Post</button>
 </div>
 </div>
 
+<div id="postList"></div>
 </div>
 
-<div class="contact">
+<div class="section reveal" id="comments">
+<h2 class="scramble-text">COMMENTS</h2>
+
+<div class="card reveal">
+<div class="card-body">
+<textarea id="commentText" placeholder="Write comment" class="input-box" style="height:90px;"></textarea>
+<br>
+<button class="btn" onclick="submitComment()">Comment</button>
+</div>
+</div>
+
+<div id="commentList"></div>
+</div>
+
+<div class="section reveal" id="polls">
+<h2 class="scramble-text">POLL</h2>
+
+<div class="card reveal">
+<div class="card-body">
+<h3>Which content do you want next?</h3>
+<button class="btn" onclick="votePoll('Bus Livery')">Bus Livery</button>
+<button class="btn" onclick="votePoll('Truck Mod')">Truck Mod</button>
+<button class="btn" onclick="votePoll('Logo Pack')">Logo Pack</button>
+</div>
+</div>
+</div>
+
+<div class="section reveal" id="suggestions">
+<h2 class="scramble-text">SUGGESTION BOX</h2>
+
+<div class="card reveal">
+<div class="card-body">
+<textarea id="suggestionText" placeholder="Write your suggestion" class="input-box" style="height:100px;"></textarea>
+<br>
+<button class="btn" onclick="submitSuggestion()">Submit Suggestion</button>
+</div>
+</div>
+</div>
+
+<div class="section reveal" id="adminPanel">
+<h2 class="scramble-text">ADMIN PANEL</h2>
+
+<div class="card reveal">
+<div class="card-body">
+<h3>Admin Controls</h3>
+<p>Only admin users can use these controls.</p>
+<input class="input-box" id="adminLiveryId" placeholder="Livery ID">
+<input class="input-box" id="adminLiveryName" placeholder="Livery Name">
+<input class="input-box" id="adminLiveryImage" placeholder="Image URL">
+<input class="input-box" id="adminLiveryDownload" placeholder="Download URL">
+<br>
+<button class="btn" onclick="adminAddLivery()">Add / Edit Livery</button>
+<button class="btn" onclick="adminSendNotification()">Send Notification</button>
+</div>
+</div>
+</div>
+
+<div class="contact reveal" id="contact">
 <h2 style="color:red;">Contact</h2>
-
 <a href="https://www.instagram.com/ultimateapex7/" target="_blank">Instagram</a>
 <a href="mailto:sharadmangaloreofficial@gmail.com">Email</a>
 <a href="https://youtube.com/@powergaming7972" target="_blank">YouTube</a>
 </div>
 
+<footer style="text-align:center;padding:20px;background:#111;">
+POWER GAMING 7972
+<br><br>
+BUSSID Mods • Liveries • Services
+<br><br>
+© 2026 POWER GAMING 7972
+</footer>
+
+<a href="https://wa.me/919741252176" target="_blank" id="floatingWhatsapp">💬</a>
+<button id="backToTop">↑</button>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signInAnonymously,
+signOut,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc,
+addDoc,
+updateDoc,
+deleteDoc,
+collection,
+query,
+orderBy,
+limit,
+onSnapshot,
+serverTimestamp,
+increment,
+arrayUnion
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey:"YOUR_API_KEY",
+authDomain:"YOUR_PROJECT.firebaseapp.com",
+projectId:"YOUR_PROJECT_ID",
+storageBucket:"YOUR_PROJECT.appspot.com",
+messagingSenderId:"YOUR_SENDER_ID",
+appId:"YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+
+let currentUser = null;
+let currentUserData = null;
+
+function showNotice(message){
+const box = document.createElement("div");
+box.style.position = "fixed";
+box.style.right = "20px";
+box.style.top = "80px";
+box.style.background = "#111";
+box.style.color = "#fff";
+box.style.border = "2px solid red";
+box.style.borderRadius = "8px";
+box.style.padding = "12px 16px";
+box.style.boxShadow = "0 0 18px red";
+box.style.zIndex = "99999";
+box.textContent = message;
+document.body.appendChild(box);
+setTimeout(()=>{box.remove();},3500);
+}
+
+function getRank(data){
+if(data.membership === "Lifetime Member") return "Lifetime Member";
+if(data.membership === "Premium Member") return "Premium Member";
+if((data.points || 0) >= 1000) return "Elite Member";
+if((data.points || 0) >= 300) return "Supporter";
+return "Beginner";
+}
+
+async function createUserProfile(user, method){
+const ref = doc(db,"users",user.uid);
+const snap = await getDoc(ref);
+
+if(!snap.exists()){
+await setDoc(ref,{
+uid:user.uid,
+username:user.displayName || "Guest User",
+email:user.email || "",
+avatar:user.photoURL || "logo.jpg",
+joinDate:serverTimestamp(),
+membership:"Free Member",
+rank:"Beginner",
+points:0,
+totalDownloads:0,
+favoriteLiveries:[],
+purchasedPremium:[],
+downloadHistory:[],
+paymentHistory:[],
+isAdmin:false,
+banned:false,
+loginMethod:method
+});
+}
+}
+
+window.googleLogin = async function(){
+try{
+const result = await signInWithPopup(auth,googleProvider);
+await createUserProfile(result.user,"Google");
+showNotice("Google login successful");
+}catch(error){showNotice(error.message);}
+};
+
+window.emailSignup = async function(){
+const email = document.getElementById("authEmail").value;
+const password = document.getElementById("authPassword").value;
+
+try{
+const result = await createUserWithEmailAndPassword(auth,email,password);
+await createUserProfile(result.user,"Email");
+showNotice("Account created successfully");
+}catch(error){showNotice(error.message);}
+};
+
+window.emailLogin = async function(){
+const email = document.getElementById("authEmail").value;
+const password = document.getElementById("authPassword").value;
+
+try{
+await signInWithEmailAndPassword(auth,email,password);
+showNotice("Login successful");
+}catch(error){showNotice(error.message);}
+};
+
+window.guestLogin = async function(){
+try{
+const result = await signInAnonymously(auth);
+await createUserProfile(result.user,"Guest");
+showNotice("Guest login successful");
+}catch(error){showNotice(error.message);}
+};
+
+window.logoutUser = async function(){
+await signOut(auth);
+showNotice("Logged out");
+};
+
+onAuthStateChanged(auth,async user=>{
+currentUser = user;
+
+if(user){
+await createUserProfile(user,"Auto");
+const ref = doc(db,"users",user.uid);
+
+onSnapshot(ref,snap=>{
+if(snap.exists()){
+currentUserData = snap.data();
+renderDashboard(currentUserData);
+}
+});
+}else{
+currentUserData = null;
+renderDashboard(null);
+}
+});
+
+window.favoriteLivery = async function(liveryId){
+if(!currentUser){showNotice("Please login first");return;}
+
+await updateDoc(doc(db,"users",currentUser.uid),{
+favoriteLiveries:arrayUnion(liveryId),
+points:increment(5)
+});
+
+showNotice("Added to favorites");
+};
+
+window.startDownload = async function(liveryId,downloadUrl){
+if(!currentUser){showNotice("Please login first");return;}
+
+const button = document.querySelector('[data-download="'+liveryId+'"]');
+let count = currentUserData && currentUserData.membership !== "Free Member" ? 3 : 7;
+
+button.textContent = "Wait " + count + "s";
+button.style.pointerEvents = "none";
+
+const timer = setInterval(async ()=>{
+count--;
+button.textContent = "Wait " + count + "s";
+
+if(count <= 0){
+clearInterval(timer);
+
+await updateDoc(doc(db,"users",currentUser.uid),{
+totalDownloads:increment(1),
+points:increment(10),
+downloadHistory:arrayUnion({
+liveryId:liveryId,
+date:new Date().toISOString()
+})
+});
+
+await setDoc(doc(db,"liveries",liveryId),{
+downloads:increment(1),
+updatedAt:serverTimestamp()
+},{merge:true});
+
+button.textContent = "Download";
+button.style.pointerEvents = "auto";
+
+showNotice("Download started successfully");
+window.open(downloadUrl,"_blank");
+}
+},1000);
+};
+
+window.premiumDownload = function(id,url){
+if(!currentUser){showNotice("Please login first");return;}
+
+const hasPremium =
+currentUserData.membership === "Premium Member" ||
+currentUserData.membership === "Lifetime Member" ||
+(currentUserData.purchasedPremium || []).includes(id);
+
+if(!hasPremium){
+showNotice("Buy premium or membership first");
+return;
+}
+
+window.open(url,"_blank");
+};
+
+window.reportBrokenLink = async function(liveryId){
+if(!currentUser){showNotice("Please login first");return;}
+
+await addDoc(collection(db,"reports"),{
+type:"broken_link",
+liveryId:liveryId,
+userId:currentUser.uid,
+status:"pending",
+createdAt:serverTimestamp()
+});
+
+showNotice("Report submitted");
+};
+
+window.submitReview = async function(){
+if(!currentUser){showNotice("Please login first");return;}
+
+const rating = Number(document.getElementById("ratingValue").value);
+const text = document.getElementById("reviewText").value.trim();
+
+if(!rating || text.length < 3){
+showNotice("Please add rating and review");
+return;
+}
+
+await addDoc(collection(db,"reviews"),{
+userId:currentUser.uid,
+username:currentUserData.username,
+avatar:currentUserData.avatar,
+rating:rating,
+text:text,
+likes:0,
+dislikes:0,
+reported:false,
+approved:false,
+adminReply:"",
+createdAt:serverTimestamp()
+});
+
+await updateDoc(doc(db,"users",currentUser.uid),{
+points:increment(20)
+});
+
+document.getElementById("reviewText").value = "";
+showNotice("Review submitted");
+};
+
+window.likeReview = async function(id){
+await updateDoc(doc(db,"reviews",id),{likes:increment(1)});
+};
+
+window.dislikeReview = async function(id){
+await updateDoc(doc(db,"reviews",id),{dislikes:increment(1)});
+};
+
+window.reportReview = async function(id){
+await updateDoc(doc(db,"reviews",id),{reported:true});
+showNotice("Review reported");
+};
+
+window.submitComment = async function(){
+if(!currentUser){showNotice("Please login first");return;}
+
+const text = document.getElementById("commentText").value.trim();
+if(text.length < 2){showNotice("Write a comment");return;}
+
+await addDoc(collection(db,"comments"),{
+userId:currentUser.uid,
+username:currentUserData.username,
+text:text,
+createdAt:serverTimestamp()
+});
+
+document.getElementById("commentText").value = "";
+};
+
+window.submitPost = async function(){
+if(!currentUser){showNotice("Please login first");return;}
+
+const text = document.getElementById("postText").value.trim();
+if(text.length < 3){showNotice("Write something");return;}
+
+await addDoc(collection(db,"communityPosts"),{
+userId:currentUser.uid,
+username:currentUserData.username,
+text:text,
+likes:0,
+createdAt:serverTimestamp()
+});
+
+await updateDoc(doc(db,"users",currentUser.uid),{
+points:increment(15)
+});
+
+document.getElementById("postText").value = "";
+};
+
+window.votePoll = async function(option){
+if(!currentUser){showNotice("Please login first");return;}
+
+await setDoc(doc(db,"pollVotes",currentUser.uid),{
+userId:currentUser.uid,
+option:option,
+createdAt:serverTimestamp()
+});
+
+showNotice("Vote submitted");
+};
+
+window.submitSuggestion = async function(){
+if(!currentUser){showNotice("Please login first");return;}
+
+const text = document.getElementById("suggestionText").value.trim();
+if(text.length < 3){showNotice("Write your suggestion");return;}
+
+await addDoc(collection(db,"suggestions"),{
+userId:currentUser.uid,
+username:currentUserData.username,
+text:text,
+status:"new",
+createdAt:serverTimestamp()
+});
+
+document.getElementById("suggestionText").value = "";
+showNotice("Suggestion submitted");
+};
+
+window.payNow = function(plan,amount){
+if(!currentUser){showNotice("Please login first");return;}
+
+const options = {
+key:"YOUR_RAZORPAY_KEY_ID",
+amount:amount * 100,
+currency:"INR",
+name:"Power Gaming 7972",
+description:plan,
+image:"logo.jpg",
+handler:async function(response){
+let membership = "Premium Member";
+if(plan === "Lifetime Membership") membership = "Lifetime Member";
+
+await updateDoc(doc(db,"users",currentUser.uid),{
+membership:membership,
+rank:getRank({...currentUserData,membership:membership}),
+paymentHistory:arrayUnion({
+plan:plan,
+amount:amount,
+paymentId:response.razorpay_payment_id,
+status:"success",
+date:new Date().toISOString()
+})
+});
+
+showNotice("Payment successful. Premium unlocked.");
+},
+prefill:{
+name:currentUserData.username,
+email:currentUser.email || ""
+},
+theme:{color:"#ff0000"},
+modal:{
+ondismiss:function(){showNotice("Payment cancelled");}
+}
+};
+
+const razorpay = new Razorpay(options);
+razorpay.open();
+};
+
+window.buyPremiumLivery = function(id,amount){
+if(!currentUser){showNotice("Please login first");return;}
+
+const options = {
+key:"YOUR_RAZORPAY_KEY_ID",
+amount:amount * 100,
+currency:"INR",
+name:"Power Gaming 7972",
+description:"Premium Livery Purchase",
+image:"logo.jpg",
+handler:async function(response){
+await updateDoc(doc(db,"users",currentUser.uid),{
+purchasedPremium:arrayUnion(id),
+paymentHistory:arrayUnion({
+plan:id,
+amount:amount,
+paymentId:response.razorpay_payment_id,
+status:"success",
+date:new Date().toISOString()
+})
+});
+
+showNotice("Premium livery unlocked.");
+},
+theme:{color:"#ff0000"}
+};
+
+const razorpay = new Razorpay(options);
+razorpay.open();
+};
+
+window.adminAddLivery = async function(){
+if(!currentUserData || !currentUserData.isAdmin){showNotice("Admin only");return;}
+
+const id = document.getElementById("adminLiveryId").value;
+const name = document.getElementById("adminLiveryName").value;
+const image = document.getElementById("adminLiveryImage").value;
+const download = document.getElementById("adminLiveryDownload").value;
+
+await setDoc(doc(db,"liveries",id),{
+name:name,
+image:image,
+download:download,
+updatedAt:serverTimestamp()
+},{merge:true});
+
+showNotice("Livery saved");
+};
+
+window.adminSendNotification = async function(){
+if(!currentUserData || !currentUserData.isAdmin){showNotice("Admin only");return;}
+
+await addDoc(collection(db,"notifications"),{
+title:"Power Gaming 7972",
+message:"New update available",
+createdAt:serverTimestamp()
+});
+
+showNotice("Notification saved");
+};
+
+window.adminApproveReview = async function(id){
+if(!currentUserData || !currentUserData.isAdmin){showNotice("Admin only");return;}
+await updateDoc(doc(db,"reviews",id),{approved:true});
+};
+
+window.adminDeleteReview = async function(id){
+if(!currentUserData || !currentUserData.isAdmin){showNotice("Admin only");return;}
+await deleteDoc(doc(db,"reviews",id));
+};
+
+window.adminReplyReview = async function(id){
+if(!currentUserData || !currentUserData.isAdmin){showNotice("Admin only");return;}
+
+const reply = prompt("Admin reply");
+if(reply){
+await updateDoc(doc(db,"reviews",id),{adminReply:reply});
+}
+};
+
+function renderDashboard(data){
+const box = document.getElementById("userDashboard");
+if(!box) return;
+
+if(!data){
+box.innerHTML = "<p style='text-align:center;'>Please login to view dashboard.</p>";
+return;
+}
+
+box.innerHTML =
+'<div class="card reveal show">' +
+'<div class="card-body">' +
+'<img src="'+data.avatar+'" style="width:90px;height:90px;border-radius:50%;border:2px solid red;object-fit:cover;">' +
+'<h3>'+data.username+'</h3>' +
+'<p><b>Membership:</b> '+data.membership+'</p>' +
+'<p><b>Rank:</b> '+data.rank+'</p>' +
+'<p><b>Points:</b> '+(data.points || 0)+'</p>' +
+'<p><b>Total Downloads:</b> '+(data.totalDownloads || 0)+'</p>' +
+'<p><b>Favorite Liveries:</b> '+(data.favoriteLiveries || []).length+'</p>' +
+'<p><b>Purchased Premium:</b> '+(data.purchasedPremium || []).length+'</p>' +
+'<p><b>Download History:</b> '+(data.downloadHistory || []).length+'</p>' +
+'<p><b>Payment History:</b> '+(data.paymentHistory || []).length+'</p>' +
+'<button class="btn" onclick="logoutUser()">Logout</button>' +
+'</div>' +
+'</div>';
+}
+
+function loadRealtimeData(){
+onSnapshot(query(collection(db,"reviews"),orderBy("createdAt","desc"),limit(20)),snapshot=>{
+const list = document.getElementById("reviewList");
+if(!list) return;
+
+list.innerHTML = "";
+
+snapshot.forEach(docSnap=>{
+const r = docSnap.data();
+const id = docSnap.id;
+
+if(!r.approved && (!currentUserData || !currentUserData.isAdmin)) return;
+
+list.innerHTML +=
+'<div class="card reveal show">' +
+'<div class="card-body">' +
+'<h3>'+r.username+'</h3>' +
+'<p style="font-size:24px;">'+"★".repeat(r.rating)+'</p>' +
+'<p>'+r.text+'</p>' +
+(r.adminReply ? '<p><b>Admin Reply:</b> '+r.adminReply+'</p>' : '') +
+'<button class="btn" onclick="likeReview(\''+id+'\')">Like '+(r.likes || 0)+'</button>' +
+'<button class="btn" onclick="dislikeReview(\''+id+'\')">Dislike '+(r.dislikes || 0)+'</button>' +
+'<button class="btn" onclick="reportReview(\''+id+'\')">Report</button>' +
+(currentUserData && currentUserData.isAdmin ? '<button class="btn" onclick="adminApproveReview(\''+id+'\')">Approve</button><button class="btn" onclick="adminReplyReview(\''+id+'\')">Reply</button><button class="btn" onclick="adminDeleteReview(\''+id+'\')">Delete</button>' : '') +
+'</div>' +
+'</div>';
+});
+});
+
+onSnapshot(query(collection(db,"comments"),orderBy("createdAt","desc"),limit(20)),snapshot=>{
+const list = document.getElementById("commentList");
+if(!list) return;
+
+list.innerHTML = "";
+
+snapshot.forEach(docSnap=>{
+const c = docSnap.data();
+
+list.innerHTML +=
+'<div class="card reveal show">' +
+'<div class="card-body">' +
+'<h3>'+c.username+'</h3>' +
+'<p>'+c.text+'</p>' +
+'</div>' +
+'</div>';
+});
+});
+
+onSnapshot(query(collection(db,"communityPosts"),orderBy("createdAt","desc"),limit(20)),snapshot=>{
+const list = document.getElementById("postList");
+if(!list) return;
+
+list.innerHTML = "";
+
+snapshot.forEach(docSnap=>{
+const p = docSnap.data();
+
+list.innerHTML +=
+'<div class="card reveal show">' +
+'<div class="card-body">' +
+'<h3>'+p.username+'</h3>' +
+'<p>'+p.text+'</p>' +
+'</div>' +
+'</div>';
+});
+});
+
+["livery1","livery2","livery3","livery4","livery5"].forEach(id=>{
+onSnapshot(doc(db,"liveries",id),snap=>{
+const el = document.getElementById("count-" + id);
+if(el && snap.exists()){
+el.textContent = "Downloads: " + (snap.data().downloads || 0);
+}
+});
+});
+}
+
+loadRealtimeData();
+</script>
+
 <script>
 function updateClock(){
-    const now = new Date();
-    document.getElementById("clock").innerHTML =
-    now.toLocaleString("en-IN",{
-        timeZone:"Asia/Kolkata"
-    });
+const now = new Date();
+document.getElementById("clock").innerHTML =
+now.toLocaleString("en-IN",{timeZone:"Asia/Kolkata"});
 }
 
 setInterval(updateClock,1000);
 updateClock();
 
 function searchLiveries(){
-    let input =
-    document.getElementById("searchInput")
-    .value
-    .toLowerCase();
+let input = document.getElementById("searchInput").value.toLowerCase();
+let cards = document.querySelectorAll(".card");
 
-    let cards =
-    document.querySelectorAll(".card");
+cards.forEach(card=>{
+let text = card.innerText.toLowerCase();
 
-    cards.forEach(card=>{
-        let text =
-        card.innerText.toLowerCase();
-
-        if(text.includes(input)){
-            card.style.display="block";
-        }else{
-            card.style.display="none";
-        }
-    });
+if(text.includes(input)){
+card.style.display="block";
+}else{
+card.style.display="none";
 }
-function addReview(){
-
-let name =
-document.getElementById("reviewName").value;
-
-let review =
-document.getElementById("reviewText").value;
-
-if(name==="" || review===""){
-alert("Please fill all fields");
-return;
+});
 }
 
-let reviews =
-document.getElementById("reviews");
+window.addEventListener("load",()=>{
+setTimeout(()=>{
+document.getElementById("loader").classList.add("hide");
+},700);
+});
 
-reviews.innerHTML +=
-"<hr><b>"+name+"</b><p>"+review+"</p>";
+const mouseGlow = document.getElementById("mouseGlow");
+const spotlight = document.getElementById("spotlight");
 
-document.getElementById("reviewName").value="";
-document.getElementById("reviewText").value="";
+document.addEventListener("mousemove",function(e){
+mouseGlow.style.left = e.clientX + "px";
+mouseGlow.style.top = e.clientY + "px";
 
+spotlight.style.setProperty("--x", e.clientX + "px");
+spotlight.style.setProperty("--y", e.clientY + "px");
+
+createMouseTrail(e.clientX,e.clientY);
+});
+
+function createMouseTrail(x,y){
+const trail = document.createElement("span");
+trail.style.position = "fixed";
+trail.style.left = x + "px";
+trail.style.top = y + "px";
+trail.style.width = "6px";
+trail.style.height = "6px";
+trail.style.borderRadius = "50%";
+trail.style.background = "red";
+trail.style.boxShadow = "0 0 12px red";
+trail.style.pointerEvents = "none";
+trail.style.zIndex = "9997";
+trail.style.opacity = ".8";
+trail.style.transition = "transform .7s ease, opacity .7s ease";
+document.body.appendChild(trail);
+
+setTimeout(()=>{
+trail.style.transform = "scale(0)";
+trail.style.opacity = "0";
+},20);
+
+setTimeout(()=>{
+trail.remove();
+},750);
 }
 
+const typeText = "BUSSID Mods & Liveries";
+const typewriter = document.getElementById("typewriter");
+let typeIndex = 0;
+
+function typeSubtitle(){
+if(typeIndex < typeText.length){
+typewriter.textContent += typeText.charAt(typeIndex);
+typeIndex++;
+setTimeout(typeSubtitle,80);
+}
+}
+
+typeSubtitle();
+
+const revealObserver = new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+},{threshold:.2});
+
+document.querySelectorAll(".reveal").forEach(el=>{
+revealObserver.observe(el);
+});
+
+const backToTop = document.getElementById("backToTop");
+
+window.addEventListener("scroll",()=>{
+if(window.scrollY > 350){
+backToTop.classList.add("show");
+}else{
+backToTop.classList.remove("show");
+}
+});
+
+backToTop.addEventListener("click",()=>{
+window.scrollTo({top:0,behavior:"smooth"});
+});
+
+document.querySelectorAll(".btn, .buttons a").forEach(button=>{
+button.addEventListener("click",function(e){
+const ripple = document.createElement("span");
+ripple.classList.add("ripple");
+
+const rect = this.getBoundingClientRect();
+const size = Math.max(rect.width, rect.height);
+
+ripple.style.width = size + "px";
+ripple.style.height = size + "px";
+ripple.style.left = e.clientX - rect.left - size / 2 + "px";
+ripple.style.top = e.clientY - rect.top - size / 2 + "px";
+
+this.appendChild(ripple);
+
+setTimeout(()=>{
+ripple.remove();
+},650);
+});
+});
+
+document.querySelectorAll(".card").forEach(card=>{
+card.addEventListener("mousemove",function(e){
+const rect = card.getBoundingClientRect();
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+
+const rotateX = ((y / rect.height) - .5) * -10;
+const rotateY = ((x / rect.width) - .5) * 10;
+
+card.style.transform =
+"translateY(-10px) rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
+});
+
+card.addEventListener("mouseleave",function(){
+card.style.transform = "";
+});
+});
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
+function scrambleText(element){
+const finalText = element.textContent;
+let iteration = 0;
+
+const interval = setInterval(()=>{
+element.textContent = finalText
+.split("")
+.map((letter,index)=>{
+if(index < iteration){
+return finalText[index];
+}
+
+if(letter === " "){
+return " ";
+}
+
+return letters[Math.floor(Math.random() * letters.length)];
+})
+.join("");
+
+if(iteration >= finalText.length){
+clearInterval(interval);
+element.textContent = finalText;
+}
+
+iteration += 1 / 2;
+},35);
+}
+
+document.querySelectorAll(".scramble-text").forEach(el=>{
+scrambleText(el);
+});
+
+const particlesCanvas = document.getElementById("particlesCanvas");
+const pctx = particlesCanvas.getContext("2d");
+let particles = [];
+
+function resizeParticles(){
+particlesCanvas.width = window.innerWidth;
+particlesCanvas.height = window.innerHeight;
+particles = [];
+
+let count = window.innerWidth < 600 ? 35 : 75;
+
+for(let i=0;i<count;i++){
+particles.push({
+x:Math.random() * particlesCanvas.width,
+y:Math.random() * particlesCanvas.height,
+vx:(Math.random() - .5) * .4,
+vy:(Math.random() - .5) * .4,
+size:Math.random() * 2 + 1
+});
+}
+}
+
+function drawParticles(){
+pctx.clearRect(0,0,particlesCanvas.width,particlesCanvas.height);
+
+particles.forEach((p,i)=>{
+p.x += p.vx;
+p.y += p.vy;
+
+if(p.x < 0 || p.x > particlesCanvas.width) p.vx *= -1;
+if(p.y < 0 || p.y > particlesCanvas.height) p.vy *= -1;
+
+pctx.beginPath();
+pctx.arc(p.x,p.y,p.size,0,Math.PI * 2);
+pctx.fillStyle = "rgba(255,0,0,.7)";
+pctx.fill();
+
+for(let j=i+1;j<particles.length;j++){
+let p2 = particles[j];
+let dx = p.x - p2.x;
+let dy = p.y - p2.y;
+let distance = Math.sqrt(dx * dx + dy * dy);
+
+if(distance < 110){
+pctx.beginPath();
+pctx.moveTo(p.x,p.y);
+pctx.lineTo(p2.x,p2.y);
+pctx.strokeStyle = "rgba(255,0,0," + (1 - distance / 110) * .35 + ")";
+pctx.stroke();
+}
+}
+});
+
+requestAnimationFrame(drawParticles);
+}
+
+resizeParticles();
+drawParticles();
+window.addEventListener("resize",resizeParticles);
+
+const matrixCanvas = document.getElementById("matrixCanvas");
+const mctx = matrixCanvas.getContext("2d");
+let matrixDrops = [];
+const matrixLetters = "POWER7972BUSSIDMODSLIVERY";
+
+function resizeMatrix(){
+matrixCanvas.width = window.innerWidth;
+matrixCanvas.height = window.innerHeight;
+
+let columns = Math.floor(matrixCanvas.width / 18);
+matrixDrops = Array(columns).fill(1);
+}
+
+function drawMatrix(){
+mctx.fillStyle = "rgba(0,0,0,.08)";
+mctx.fillRect(0,0,matrixCanvas.width,matrixCanvas.height);
+
+mctx.fillStyle = "rgba(255,0,0,.6)";
+mctx.font = "16px monospace";
+
+for(let i=0;i<matrixDrops.length;i++){
+let text = matrixLetters[Math.floor(Math.random() * matrixLetters.length)];
+mctx.fillText(text,i * 18,matrixDrops[i] * 18);
+
+if(matrixDrops[i] * 18 > matrixCanvas.height && Math.random() > .975){
+matrixDrops[i] = 0;
+}
+
+matrixDrops[i]++;
+}
+
+requestAnimationFrame(drawMatrix);
+}
+
+resizeMatrix();
+drawMatrix();
+window.addEventListener("resize",resizeMatrix);
+
+function createSpark(){
+const spark = document.createElement("span");
+spark.className = "spark";
+spark.style.left = Math.random() * window.innerWidth + "px";
+spark.style.animationDuration = (3 + Math.random() * 3) + "s";
+document.body.appendChild(spark);
+
+setTimeout(()=>{
+spark.remove();
+},6000);
+}
+
+setInterval(createSpark,500);
+
+window.addEventListener("scroll",()=>{
+let scrollValue = window.scrollY;
+document.body.style.backgroundPosition =
+"center " + scrollValue * .25 + "px";
+});
 </script>
-
-<footer style="text-align:center;padding:20px;background:#111;">
-POWER GAMING 7972
-
-<br><br>
-
-BUSSID Mods • Liveries • Services
-
-<br><br>
-
-© 2026 POWER GAMING 7972
-
-</footer>
-
-<a href="https://wa.me/919741252176"
-target="_blank"
-id="floatingWhatsapp">
-💬
-</a>
 
 </body>
 </html>
