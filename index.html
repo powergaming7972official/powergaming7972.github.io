@@ -847,7 +847,9 @@ BUSSID Mods • Liveries • Services
 <button id="backToTop">↑</button>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+
 import {
 getAuth,
 GoogleAuthProvider,
@@ -877,22 +879,76 @@ increment,
 arrayUnion
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
+/*
+IMPORTANT:
+For GitHub Pages / custom domain, add your domain here:
+
+Firebase Console
+Authentication
+Settings
+Authorized domains
+
+Add:
+localhost
+127.0.0.1
+sharadmangaloreofficial-cyber.github.io
+your custom domain if used
+
+Also enable:
+Google
+Email/Password
+Anonymous
+*/
+
 const firebaseConfig = {
-apiKey:"YOUR_API_KEY",
-authDomain:"YOUR_PROJECT.firebaseapp.com",
-projectId:"YOUR_PROJECT_ID",
-storageBucket:"YOUR_PROJECT.appspot.com",
-messagingSenderId:"YOUR_SENDER_ID",
-appId:"YOUR_APP_ID"
+apiKey:"AIzaSyAn_Ti1ZTVbyWOXxcjmOvYgGMyGZtcPgSM",
+authDomain:"powergamig7972.firebaseapp.com",
+projectId:"powergamig7972",
+storageBucket:"powergamig7972.firebasestorage.app",
+messagingSenderId:"592395233423",
+appId:"1:592395233423:web:ff349e98e1eef1f8f028fa",
+measurementId:"G-R9L7C6L1XC"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+function checkFirebaseConfig(config){
+const badValues = [
+"YOUR_API_KEY",
+"YOUR_PROJECT.firebaseapp.com",
+"YOUR_PROJECT_ID",
+"YOUR_PROJECT.appspot.com",
+"YOUR_SENDER_ID",
+"YOUR_APP_ID",
+""
+];
+
+if(!config.apiKey || badValues.includes(config.apiKey)){
+throw new Error("Firebase apiKey missing or placeholder.");
+}
+
+if(!config.authDomain || badValues.includes(config.authDomain)){
+throw new Error("Firebase authDomain missing or placeholder.");
+}
+
+if(!config.projectId || badValues.includes(config.projectId)){
+throw new Error("Firebase projectId missing or placeholder.");
+}
+
+if(!config.appId || badValues.includes(config.appId)){
+throw new Error("Firebase appId missing or placeholder.");
+}
+
+console.log("Firebase config checked successfully");
+}
+
+let app;
+let analytics = null;
+let auth;
+let db;
+let googleProvider;
 
 let currentUser = null;
 let currentUserData = null;
+let currentUserUnsubscribe = null;
 
 function showNotice(message){
 const box = document.createElement("div");
@@ -908,7 +964,85 @@ box.style.boxShadow = "0 0 18px red";
 box.style.zIndex = "99999";
 box.textContent = message;
 document.body.appendChild(box);
-setTimeout(()=>{box.remove();},3500);
+
+setTimeout(()=>{
+box.remove();
+},3500);
+}
+
+function firebaseErrorMessage(error){
+console.error("Firebase error code:", error.code || error.name);
+console.error("Firebase error message:", error.message);
+
+if(error.code === "auth/api-key-not-valid"){
+return "Firebase API key is invalid. Check apiKey from Firebase Console.";
+}
+
+if(error.code === "auth/unauthorized-domain"){
+return "This domain is not authorized. Add your domain in Firebase Authentication settings.";
+}
+
+if(error.code === "auth/popup-blocked"){
+return "Google popup blocked. Allow popups and try again.";
+}
+
+if(error.code === "auth/popup-closed-by-user"){
+return "Google login popup closed before finishing.";
+}
+
+if(error.code === "auth/invalid-email"){
+return "Invalid email address.";
+}
+
+if(error.code === "auth/invalid-credential"){
+return "Wrong email or password.";
+}
+
+if(error.code === "auth/email-already-in-use"){
+return "This email is already registered. Please login.";
+}
+
+if(error.code === "auth/weak-password"){
+return "Password must be at least 6 characters.";
+}
+
+if(error.code === "permission-denied"){
+return "Firestore permission denied. Check Firebase Security Rules.";
+}
+
+return error.message || "Firebase error occurred.";
+}
+
+try{
+checkFirebaseConfig(firebaseConfig);
+
+app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+console.log("Firebase loaded successfully");
+console.log("Firebase app initialized successfully:", app.name);
+
+auth = getAuth(app);
+console.log("Authentication initialized successfully");
+
+db = getFirestore(app);
+console.log("Firestore initialized successfully");
+
+googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+prompt:"select_account"
+});
+console.log("Google Login setup successfully");
+
+if(await isSupported()){
+analytics = getAnalytics(app);
+console.log("Firebase Analytics initialized successfully");
+}else{
+console.warn("Firebase Analytics not supported in this browser");
+}
+
+}catch(error){
+console.error("Firebase initialization failed:", error);
+showNotice("Firebase initialization failed: " + error.message);
+throw error;
 }
 
 function getRank(data){
@@ -920,6 +1054,7 @@ return "Beginner";
 }
 
 async function createUserProfile(user, method){
+try{
 const ref = doc(db,"users",user.uid);
 const snap = await getDoc(ref);
 
@@ -942,69 +1077,138 @@ isAdmin:false,
 banned:false,
 loginMethod:method
 });
+
+console.log("New user profile created:", user.uid);
+}else{
+console.log("Existing user profile loaded:", user.uid);
+}
+}catch(error){
+console.error("User profile error:", error);
+showNotice(firebaseErrorMessage(error));
 }
 }
 
 window.googleLogin = async function(){
 try{
+console.log("Google login started");
 const result = await signInWithPopup(auth,googleProvider);
 await createUserProfile(result.user,"Google");
+console.log("Google login successful:", result.user.uid);
 showNotice("Google login successful");
-}catch(error){showNotice(error.message);}
+}catch(error){
+console.error("Google login failed:", error);
+showNotice(firebaseErrorMessage(error));
+}
 };
 
 window.emailSignup = async function(){
-const email = document.getElementById("authEmail").value;
+const email = document.getElementById("authEmail").value.trim();
 const password = document.getElementById("authPassword").value;
 
+if(!email || !password){
+showNotice("Enter email and password");
+return;
+}
+
 try{
+console.log("Email signup started");
 const result = await createUserWithEmailAndPassword(auth,email,password);
 await createUserProfile(result.user,"Email");
+console.log("Email signup successful:", result.user.uid);
 showNotice("Account created successfully");
-}catch(error){showNotice(error.message);}
+}catch(error){
+console.error("Email signup failed:", error);
+showNotice(firebaseErrorMessage(error));
+}
 };
 
 window.emailLogin = async function(){
-const email = document.getElementById("authEmail").value;
+const email = document.getElementById("authEmail").value.trim();
 const password = document.getElementById("authPassword").value;
 
+if(!email || !password){
+showNotice("Enter email and password");
+return;
+}
+
 try{
-await signInWithEmailAndPassword(auth,email,password);
+console.log("Email login started");
+const result = await signInWithEmailAndPassword(auth,email,password);
+await createUserProfile(result.user,"Email");
+console.log("Email login successful:", result.user.uid);
 showNotice("Login successful");
-}catch(error){showNotice(error.message);}
+}catch(error){
+console.error("Email login failed:", error);
+showNotice(firebaseErrorMessage(error));
+}
 };
 
 window.guestLogin = async function(){
 try{
+console.log("Guest login started");
 const result = await signInAnonymously(auth);
 await createUserProfile(result.user,"Guest");
+console.log("Guest login successful:", result.user.uid);
 showNotice("Guest login successful");
-}catch(error){showNotice(error.message);}
+}catch(error){
+console.error("Guest login failed:", error);
+showNotice(firebaseErrorMessage(error));
+}
 };
 
 window.logoutUser = async function(){
+try{
 await signOut(auth);
+console.log("Logout successful");
 showNotice("Logged out");
+}catch(error){
+console.error("Logout failed:", error);
+showNotice(firebaseErrorMessage(error));
+}
 };
 
 onAuthStateChanged(auth,async user=>{
 currentUser = user;
+window.currentUser = user;
+
+if(currentUserUnsubscribe){
+currentUserUnsubscribe();
+currentUserUnsubscribe = null;
+}
 
 if(user){
+console.log("Auth state: user signed in", user.uid);
 await createUserProfile(user,"Auto");
+
 const ref = doc(db,"users",user.uid);
 
-onSnapshot(ref,snap=>{
+currentUserUnsubscribe = onSnapshot(ref,snap=>{
 if(snap.exists()){
 currentUserData = snap.data();
+window.currentUserData = currentUserData;
+
+if(typeof renderDashboard === "function"){
 renderDashboard(currentUserData);
 }
+
+console.log("User dashboard data updated");
+}
+},error=>{
+console.error("User realtime listener failed:", error);
+showNotice(firebaseErrorMessage(error));
 });
+
 }else{
+console.log("Auth state: no user signed in");
 currentUserData = null;
+window.currentUserData = null;
+
+if(typeof renderDashboard === "function"){
 renderDashboard(null);
 }
+}
 });
+</script>
 
 window.favoriteLivery = async function(liveryId){
 if(!currentUser){showNotice("Please login first");return;}
