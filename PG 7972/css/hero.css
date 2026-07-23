@@ -1,0 +1,47 @@
+.hero{
+
+min-height:100vh;
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+align-items:center;
+
+gap:70px;
+
+padding-top:120px;
+
+max-width:var(--container);
+
+margin:auto;
+
+}
+
+.hero-content h1{
+
+font-size:70px;
+
+line-height:1.1;
+
+margin-bottom:20px;
+
+color:var(--gold);
+
+}
+
+.hero-content p{
+
+font-size:22px;
+
+margin-bottom:40px;
+
+}
+
+.hero-image img{
+
+border-radius:25px;
+
+box-shadow:var(--shadow);
+
+}

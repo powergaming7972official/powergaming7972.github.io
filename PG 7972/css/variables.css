@@ -1,0 +1,35 @@
+:root{
+
+/* COLORS */
+
+--bg:#0A0A0A;
+--bg2:#111111;
+
+--card:#171717;
+
+--gold:#FFD700;
+--gold-hover:#E6C200;
+
+--white:#FFFFFF;
+
+--text:#D9D9D9;
+
+--border:#2A2A2A;
+
+--shadow:0 15px 40px rgba(0,0,0,.35);
+
+--radius:18px;
+
+/* TRANSITIONS */
+
+--transition:.35s ease;
+
+/* FONTS */
+
+--font:'Poppins',sans-serif;
+
+/* MAX WIDTH */
+
+--container:1300px;
+
+}
