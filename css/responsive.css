@@ -1,0 +1,279 @@
+/* ==========================================
+LARGE LAPTOPS (1200px)
+========================================== */
+
+@media (max-width:1200px){
+
+section{
+padding:80px 5%;
+}
+
+.hero{
+padding:80px 5%;
+}
+
+.gallery-grid,
+.cards,
+.service-grid,
+.why-grid,
+.review-grid{
+gap:24px;
+}
+
+}
+
+/* ==========================================
+LAPTOP (992px)
+========================================== */
+
+@media (max-width:992px){
+
+h1{
+font-size:42px;
+}
+
+h2,
+.section-title{
+font-size:34px;
+}
+
+.hero{
+display:flex;
+flex-direction:column;
+text-align:center;
+gap:40px;
+}
+
+.hero-content{
+order:2;
+}
+
+.hero-image{
+order:1;
+max-width:700px;
+margin:auto;
+}
+
+.hero-buttons{
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.nav-links{
+position:fixed;
+top:80px;
+right:-100%;
+width:270px;
+height:calc(100vh - 80px);
+background:#111;
+display:flex;
+flex-direction:column;
+padding:30px;
+gap:20px;
+transition:.35s;
+z-index:999;
+}
+
+.nav-links.active{
+right:0;
+}
+
+.menu-btn{
+display:block;
+}
+
+.stats,
+.stats-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.footer-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+/* ==========================================
+TABLET (768px)
+========================================== */
+
+@media (max-width:768px){
+
+section{
+padding:70px 20px;
+}
+
+.hero{
+padding-top:120px;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+.section-title{
+font-size:30px;
+}
+
+.section-subtitle{
+font-size:16px;
+}
+
+.cards,
+.category-grid,
+.service-grid,
+.why-grid,
+.gallery-grid,
+.review-grid,
+.guide-grid{
+grid-template-columns:1fr;
+}
+
+.stats,
+.stats-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.newsletter-form{
+flex-direction:column;
+align-items:center;
+}
+
+.newsletter input{
+width:100%;
+max-width:450px;
+}
+
+.newsletter button{
+width:100%;
+max-width:450px;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.search-section input{
+font-size:16px;
+padding:16px;
+}
+
+.gallery-img{
+height:220px;
+}
+
+.contact-cta h2{
+font-size:34px;
+}
+
+}
+
+/* ==========================================
+MOBILE (576px)
+========================================== */
+
+@media (max-width:576px){
+
+.logo span{
+display:none;
+}
+
+.hero h1{
+font-size:28px;
+}
+
+.hero p{
+font-size:15px;
+}
+
+.section-title{
+font-size:26px;
+}
+
+.category-card,
+.service-card,
+.review-card,
+.why-card,
+.guide-card{
+padding:25px;
+}
+
+.stat-card h2{
+font-size:42px;
+}
+
+.service-icon,
+.why-icon{
+font-size:46px;
+}
+
+.gallery-img{
+height:190px;
+}
+
+.floating-social{
+right:15px;
+bottom:15px;
+gap:10px;
+}
+
+.floating-social a,
+.floating-social button{
+width:48px;
+height:48px;
+font-size:20px;
+}
+
+#close-lightbox{
+font-size:42px;
+right:20px;
+top:15px;
+}
+
+}
+
+/* ==========================================
+SMALL MOBILE (400px)
+========================================== */
+
+@media (max-width:400px){
+
+section{
+padding:60px 15px;
+}
+
+.hero h1{
+font-size:24px;
+}
+
+.hero-buttons{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.hero-buttons .btn{
+width:100%;
+}
+
+.stats,
+.stats-grid{
+grid-template-columns:1fr;
+}
+
+.search-section input{
+font-size:15px;
+padding:14px;
+}
+
+.contact-cta h2{
+font-size:28px;
+}
+
+.newsletter input,
+.newsletter button{
+width:100%;
+}
+
+}
