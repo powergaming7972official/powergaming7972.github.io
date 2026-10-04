@@ -1,0 +1,194 @@
+/* =========================================================
+   POWER GAMING 7972
+   PREMIUM BUTTONS
+========================================================= */
+
+
+/* =========================
+   HERO BUTTON GROUP
+========================= */
+
+.hero-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================
+   BASE BUTTON
+========================= */
+
+.btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 52px;
+
+    padding: 15px 34px;
+
+    border-radius: 50px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    border: 2px solid transparent;
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* =========================
+   GOLD BUTTON
+========================= */
+
+.btn.gold,
+.gold {
+    background:
+        linear-gradient(
+            135deg,
+            #ffd700,
+            #ffc107
+        );
+
+    color: #000;
+
+    border-color: #ffd700;
+
+    box-shadow:
+        0 10px 25px rgba(255, 215, 0, 0.25);
+}
+
+.btn.gold:hover,
+.gold:hover {
+    transform: translateY(-5px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe45c,
+            #ffd700
+        );
+
+    color: #000;
+
+    box-shadow:
+        0 18px 40px rgba(255, 215, 0, 0.4);
+}
+
+
+/* =========================
+   WHITE / OUTLINE BUTTON
+========================= */
+
+.btn.white,
+.white {
+    background: transparent;
+
+    color: #fff;
+
+    border: 2px solid var(--gold);
+}
+
+.btn.white:hover,
+.white:hover {
+    background: var(--gold);
+
+    color: #000;
+
+    border-color: var(--gold);
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 12px 30px rgba(255, 215, 0, 0.25);
+}
+
+
+/* =========================
+   BUTTON ICONS
+========================= */
+
+.btn i {
+    margin-right: 8px;
+
+    font-size: 16px;
+
+    line-height: 1;
+}
+
+
+/* =========================
+   CLICK EFFECT
+========================= */
+
+.btn:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+
+/* =========================
+   FOCUS
+========================= */
+
+.btn:focus-visible {
+    outline: 2px solid #fff;
+
+    outline-offset: 4px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .hero-buttons {
+        width: 100%;
+
+        flex-direction: column;
+
+        gap: 14px;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .btn {
+        transition: none;
+    }
+
+}
